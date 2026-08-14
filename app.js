@@ -15,30 +15,32 @@ function addMessage(text, sender) {
 function handleUserInput() {
     const text = userInput.value.trim();
     if (!text) return;
-    
+
     addMessage(text, 'user');
     userInput.value = '';
-    
+
     if (currentFlow) {
-        currentFlow = currentFlow.next(text);
-    } else {
-        const intent = detectIntent(text);
-        if (intent === 'order_status') {
-            currentFlow = startOrderStatusFlow(addMessage);
-        } else if (intent === 'returns') {
-            currentFlow = startReturnsFlow(addMessage);
+        const nextFlow = currentFlow.next(text);
+        if (!nextFlow) {
+            currentFlow = null;
         } else {
-            addMessage("I can help with order status, returns, or stock availability. What do you need?", 'bot');
+            const intent = detectIntent(text);
+            if (intent === 'order_status') {
+                currentFlow = startOrderStatusFlow(addMessage);
+            } else if (intent === 'returns') {
+                currentFlow = startReturnsFlow(addMessage);
+            } else {
+                addMessage("I can help with order status, returns, or stock availability. What do you need?", 'bot');
+            }
         }
     }
-}
 
-sendBtn.addEventListener('click', handleUserInput);
-userInput.addEventListener('keypress', (e) => {
-    if (e.key === 'Enter') handleUserInput();
-});
+    sendBtn.addEventListener('click', handleUserInput);
+    userInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') handleUserInput();
+    });
 
-// Welcome message
-setTimeout(() => {
-    addMessage("Hi! I'm your Northstar support assistant. How can I help you today?", 'bot');
-}, 300);
+    // Welcome message
+    setTimeout(() => {
+        addMessage("Hi! I'm your Northstar support assistant. How can I help you today?", 'bot');
+    }, 300);
