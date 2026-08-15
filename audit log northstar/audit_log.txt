@@ -1,0 +1,14 @@
+5e92bc9 | Amanda Ireri | 2026-08-15 | Merge pull request #18 from PLP-Group-41/order-status
+0c054b8 | AmandaIreri | 2026-08-15 | fix: remove duplicate addMessage call from merge conflict
+a21dbe5 | Amanda Ireri | 2026-08-15 | Merge pull request #17 from PLP-Group-41/user-input-capture-and-display
+7b04ba6 | Amanda Ireri | 2026-08-15 | Merge branch 'main' into user-input-capture-and-display
+78f3e14 | Kiprop Lilian | 2026-08-15 | Add user input capture and display
+17dd2fa | Amanda Ireri | 2026-08-15 | Merge pull request #16 from PLP-Group-41/order-status
+fb26efb | AmandaIreri | 2026-08-15 | fix: resolve intent matcher (#6) and order status flow (#7)
+458b294 | Amanda Ireri | 2026-08-15 | Merge pull request #15 from PLP-Group-41/8-build-intent-matcher-for-returnsrefunds
+da4c215 | AmandaIreri | 2026-08-14 | add order status intent matcher and decision tree - enables users to check shipping without human agent
+54f744a | Davis Kiai | 2026-08-14 | feat: add returns/refunds decision tree and fix intent.js script reference - completes returns flow end-to-end
+30fdd8a | AmandaIreri | 2026-08-13 | chore: initialize repo with starter chatbot files - gives team foundation to build on
+b8f61a1 | AmandaIreri | 2026-08-13 | first commit
+c076b53 | Amanda Ireri | 2026-08-13 | Revise README with project title and details
+8399002 | Amanda Ireri | 2026-08-13 | Initial commit
