@@ -14,11 +14,25 @@ function addMessage(text, sender) {
 
 function handleUserInput() {
     const text = userInput.value.trim();
-    if (!text) return;
-    
+    if (!text) {
+        userInput.style.border = "2px solid red";
+        setTimeout(() =>{
+            userInput.style.border = "";
+        }, 1000);
+   
+        return;
+     } 
     addMessage(text, 'user');
     userInput.value = '';
+    const typingMessage = document.createElement('div');
+    typingMessage.className = 'message bot-message';
+    typingMessage.textContent = '...';
+    chatMessages.appendChild(typingMessage);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
     
+setTimeout(() => {
+    typingMessage.remove();
+
     if (currentFlow) {
         currentFlow = currentFlow.next(text);
     } else {
@@ -31,7 +45,9 @@ function handleUserInput() {
             addMessage("I can help with order status, returns, or stock availability. What do you need?", 'bot');
         }
     }
+}, 800);
 }
+
 
 sendBtn.addEventListener('click', handleUserInput);
 userInput.addEventListener('keypress', (e) => {
