@@ -32,9 +32,13 @@ function handleUserInput() {
     
 setTimeout(() => {
     typingMessage.remove();
+    if (!text) return;
+
+    addMessage(text, 'user');
+    userInput.value = '';
 
     if (currentFlow) {
-        currentFlow = currentFlow.next(text);
+        currentFlow = currentFlow.next(text); // null or the continuing flow
     } else {
         const intent = detectIntent(text);
         if (intent === 'order_status') {
@@ -48,13 +52,13 @@ setTimeout(() => {
 }, 800);
 }
 
-
+// ✅ Attach listeners at the top level, not inside the handler
 sendBtn.addEventListener('click', handleUserInput);
 userInput.addEventListener('keypress', (e) => {
     if (e.key === 'Enter') handleUserInput();
 });
 
-// Welcome message
+// ✅ Welcome message runs on load
 setTimeout(() => {
     addMessage("Hi! I'm your Northstar support assistant. How can I help you today?", 'bot');
 }, 300);
