@@ -20,27 +20,26 @@ function handleUserInput() {
     userInput.value = '';
 
     if (currentFlow) {
-        const nextFlow = currentFlow.next(text);
-        if (!nextFlow) {
-            currentFlow = null;
+        currentFlow = currentFlow.next(text); // null or the continuing flow
+    } else {
+        const intent = detectIntent(text);
+        if (intent === 'order_status') {
+            currentFlow = startOrderStatusFlow(addMessage);
+        } else if (intent === 'returns') {
+            currentFlow = startReturnsFlow(addMessage);
         } else {
-            const intent = detectIntent(text);
-            if (intent === 'order_status') {
-                currentFlow = startOrderStatusFlow(addMessage);
-            } else if (intent === 'returns') {
-                currentFlow = startReturnsFlow(addMessage);
-            } else {
-                addMessage("I can help with order status, returns, or stock availability. What do you need?", 'bot');
-            }
+            addMessage("I can help with order status, returns, or stock availability. What do you need?", 'bot');
         }
     }
+}
 
-    sendBtn.addEventListener('click', handleUserInput);
-    userInput.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') handleUserInput();
-    });
+// ✅ Attach listeners at the top level, not inside the handler
+sendBtn.addEventListener('click', handleUserInput);
+userInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') handleUserInput();
+});
 
-    // Welcome message
-    setTimeout(() => {
-        addMessage("Hi! I'm your Northstar support assistant. How can I help you today?", 'bot');
-    }, 300);
+// ✅ Welcome message runs on load
+setTimeout(() => {
+    addMessage("Hi! I'm your Northstar support assistant. How can I help you today?", 'bot');
+}, 300);
