@@ -14,22 +14,23 @@ function addMessage(text, sender) {
 
 function handleUserInput() {
     const text = userInput.value.trim();
-    if (!text) {
-        userInput.style.border = "2px solid red";
-        setTimeout(() =>{
-            userInput.style.border = "";
-        }, 1000);
-   
-        return;
-     } 
-    addMessage(text, 'user');
-    userInput.value = '';
-    const typingMessage = document.createElement('div');
-    typingMessage.className = 'message bot-message';
-    typingMessage.textContent = '...';
-    chatMessages.appendChild(typingMessage);
-    chatMessages.scrollTop = chatMessages.scrollHeight;
-    
+if (!text) {
+    userInput.style.border = "2px solid red";
+    setTimeout(() => {
+        userInput.style.border = "";
+    }, 1000);
+    return;
+}
+
+addMessage(text, 'user');
+userInput.value = '';
+
+const typingMessage = document.createElement('div');
+typingMessage.className = 'message bot-message';
+typingMessage.textContent = '...';
+chatMessages.appendChild(typingMessage);
+chatMessages.scrollTop = chatMessages.scrollHeight;
+
 setTimeout(() => {
     typingMessage.remove();
 
@@ -37,24 +38,26 @@ setTimeout(() => {
         currentFlow = currentFlow.next(text);
     } else {
         const intent = detectIntent(text);
+
         if (intent === 'order_status') {
             currentFlow = startOrderStatusFlow(addMessage);
         } else if (intent === 'returns') {
             currentFlow = startReturnsFlow(addMessage);
         } else {
-            addMessage("I can help with order status, returns, or stock availability. What do you need?", 'bot');
+            addMessage(
+                "I can help with order status, returns, or stock availability. What do you need?",
+                'bot'
+            );
         }
     }
 }, 800);
 }
-
-
 sendBtn.addEventListener('click', handleUserInput);
 userInput.addEventListener('keypress', (e) => {
     if (e.key === 'Enter') handleUserInput();
 });
 
-// Welcome message
+// ✅ Welcome message runs on load
 setTimeout(() => {
     addMessage("Hi! I'm your Northstar support assistant. How can I help you today?", 'bot');
 }, 300);
